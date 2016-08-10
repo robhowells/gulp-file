@@ -2,13 +2,13 @@ var gulp 			= require('gulp'),
 	sass 			= require('gulp-sass'),
 	plumber 		= require('gulp-plumber');
 	autoprefixer 	= require('gulp-autoprefixer'),
-	cleanCSS 		= require('gulp-clean-css'),
+	cleanCSS 		= require('gulp-clean-css'), 
 	concat 			= require('gulp-concat'),
 	uglify 			= require('gulp-uglify');
 
 // ... variables
 var paths = {
-	scripts: './scripts/src/**/*',
+	scripts: ['./scripts/src/vendors/*.js', './scripts/src/components/*.js', './scripts/src/*.js'],
 	sass: './scss/**/*.scss'
 };
 
