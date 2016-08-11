@@ -8,7 +8,7 @@ var gulp 			= require('gulp'),
 
 // ... variables
 var paths = {
-	scripts: ['./scripts/src/vendors/*.js', './scripts/src/components/*.js', './scripts/src/*.js'],
+	scripts: ['./js/src/vendors/*.js', './js/src/components/*.js', './js/src/*.js'],
 	sass: './scss/**/*.scss'
 };
 
@@ -43,15 +43,15 @@ gulp.task('sass:build', function () {
 
 gulp.task('scripts:dev', function() {
 	gulp.src(paths.scripts)
-		.pipe(concat('min.js'))
-		.pipe(gulp.dest('./scripts/dist'))
+		.pipe(concat('js.min.js'))
+		.pipe(gulp.dest('./js/dist')) 
 });
 
 gulp.task('scripts:build', function() {
 	gulp.src(paths.scripts)
-		.pipe(concat('main.min.js'))
+		.pipe(concat('js.min.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest('./scripts/dist'))
+		.pipe(gulp.dest('./js/dist'))
 });
 
 gulp.task('watch', function() {
