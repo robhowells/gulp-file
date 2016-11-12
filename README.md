@@ -1,7 +1,10 @@
 #Gulp file
 Example gulp file to automate the following tasks:
 
-- Sass compilation and minification
+- SASS linting
+- SASS compilation
+- CSS autoprefixing
+- CSS formatting 
+- CSS minification
 - JS minification
-- Autoprefixing
 - Image minification
