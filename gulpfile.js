@@ -5,19 +5,26 @@ var gulp = require('gulp'),
 	cleanCSS = require('gulp-clean-css'), 
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
-	imagemin = require('gulp-imagemin');
+	imagemin = require('gulp-imagemin'),
+	csscomb = require('gulp-csscomb'),
+	sassLint = require('gulp-sass-lint');
 
 var paths = {
 	scripts: {
 		src: ['./js/src/vendors/*.js', './js/src/components/*.js', './js/src/*.js'],
-		dist: './js/dist'
+		dist: './js/dist',
+		lint: ['./js/src/components/*.js', './js/src/*.js']
 	},
 	sass: {
 		src: './scss/**/*.scss',
-		dist: './css'
+		dist: './css',
+		lint: ['./scss/base/**/*.scss', './scss/global/**/*.scss', './scss/layout/**/*.scss']
+	},
+	css: {
+		src: './css/style.css',
 	},
 	images: {
-		src: '.img/src/**/*.{jpg,jpeg,png,gif}',
+		src: '.img/src/**/*.{jpg,jpeg,png,gif}', 
 		dist: './img/dist'
 	}
 };
@@ -45,11 +52,11 @@ gulp.task('sass:dev', function () {
 		}))
 		.pipe(sass())
 		.pipe(autoprefixer(config.autoprefixer))
-		.pipe(gulp.dest(paths.sass.dist));
+		.pipe(gulp.dest(paths.sass.dist))
 });
 
 gulp.task('sass:build', function () {
-	return gulp.src(paths.sass.src)
+	return gulp.src(paths.sass.src) 
 		.pipe(sass())
 		.pipe(autoprefixer(config.autoprefixer))
 		.pipe(cleanCSS({debug: true}, function(details) {
@@ -57,7 +64,27 @@ gulp.task('sass:build', function () {
 			console.log('Minified size of ' + details.name + ': ' + details.stats.minifiedSize + 'kb');
 		}))
 		.pipe(concat('style.min.css'))
+		.pipe(csscomb())
 		.pipe(gulp.dest(paths.sass.dist));
+});
+
+gulp.task('lint:sass', function () {
+  return gulp.src(paths.sass.lint)
+    .pipe(sassLint({
+    	rules: {
+    		'no-warn': 0,
+        	'no-ids': 1,
+        	'indentation': 0,
+        	'no-css-comments': 0,
+        	'property-sort-order': 0,
+        	'mixins-before-declarations': 0,
+        	'empty-line-between-blocks': 0,
+        	'no-mergeable-selectors': 0,
+        	'no-color-literals': 0
+		},
+    }))
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError())
 });
 
 gulp.task('scripts:dev', function() {
@@ -81,7 +108,7 @@ gulp.task('imagemin', function() {
 
 gulp.task('watch', function() {
 	gulp.watch(paths.scripts.src, ['scripts:dev']);
-	gulp.watch(paths.sass.src, ['sass:dev']);
+	gulp.watch(paths.sass.src, ['lint:sass', 'sass:dev']);
 });
 
 gulp.task('build', ['sass:build', 'scripts:build', 'imagemin'], function() {});
