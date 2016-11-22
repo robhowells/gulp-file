@@ -8,37 +8,36 @@ var gulp = require('gulp'),
 	imagemin = require('gulp-imagemin'),
 	csscomb = require('gulp-csscomb'),
 	sasslint = require('gulp-sass-lint'),
-	jshint = require('gulp-jshint');
-
-var paths = {
-	js: {
-		src: ['./js/src/vendors/*.js', './js/src/components/*.js', './js/src/*.js'],
-		dist: './js/dist',
-		lint: ['./js/src/components/*.js', './js/src/*.js']
-	},
-	sass: {
-		src: './scss/**/*.scss',
-		dist: './css',
-		lint: ['./scss/base/**/*.scss', './scss/global/**/*.scss', './scss/layout/**/*.scss']
-	},
-	img: {
-        src: './img/src/**/*.{jpg,jpeg,png,gif,svg,PNG,JPG,JPEG,PNG,GIF,SVG}',
-        dist: './img/'
-    }
-};
-
-var config = {
-	autoprefixer: {
-		browsers: ['last 2 versions', '> 5%', 'Firefox ESR', 'ie 9']
-	},
-	img: {
-		options: {
-	      optimizationLevel: 3,
-	      progessive: true,
-	      interlaced: true
+	jshint = require('gulp-jshint'),
+	stylish = require('jshint-stylish'),
+	paths = {
+		js: {
+			src: ['./js/src/vendors/*.js', './js/src/components/*.js', './js/src/*.js'],
+			dist: './js/dist',
+			lint: ['./js/src/components/*.js', './js/src/*.js']
+		},
+		sass: {
+			src: './scss/**/*.scss',
+			dist: './css',
+			lint: ['./scss/base/**/*.scss', './scss/global/**/*.scss', './scss/layout/**/*.scss']
+		},
+		img: {
+	        src: './img/src/**/*.{jpg,jpeg,png,gif,svg,PNG,JPG,JPEG,PNG,GIF,SVG}',
+	        dist: './img/'
 	    }
-	}
-};
+	},
+	config = {
+		autoprefixer: {
+			browsers: ['last 2 versions', '> 5%', 'Firefox ESR', 'ie 9']
+		},
+		img: {
+			options: {
+		      optimizationLevel: 3,
+		      progessive: true,
+		      interlaced: true
+		    }
+		}
+	};
 
 gulp.task('sass:lint', function() {
   return gulp.src(paths.sass.lint)
@@ -100,7 +99,7 @@ gulp.task('sass:build', function () {
 gulp.task('js:lint', function() {
 	return gulp.src(paths.js.lint)
 		.pipe(jshint())
-		.pipe(jshint.reporter('default'))
+		.pipe(jshint.reporter(stylish))
 });
 
 gulp.task('js:dev', function() {
