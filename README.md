@@ -6,5 +6,7 @@ Example gulp file to automate the following tasks:
 - CSS autoprefixing
 - CSS formatting 
 - CSS minification
+- JS linting
+- JS concatenation
 - JS minification
 - Image minification

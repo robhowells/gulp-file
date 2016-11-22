@@ -7,70 +7,41 @@ var gulp = require('gulp'),
 	uglify = require('gulp-uglify'),
 	imagemin = require('gulp-imagemin'),
 	csscomb = require('gulp-csscomb'),
-	sassLint = require('gulp-sass-lint');
-
-var paths = {
-	scripts: {
-		src: ['./js/src/vendors/*.js', './js/src/components/*.js', './js/src/*.js'],
-		dist: './js/dist',
-		lint: ['./js/src/components/*.js', './js/src/*.js']
-	},
-	sass: {
-		src: './scss/**/*.scss',
-		dist: './css',
-		lint: ['./scss/base/**/*.scss', './scss/global/**/*.scss', './scss/layout/**/*.scss']
-	},
-	css: {
-		src: './css/style.css',
-	},
-	images: {
-		src: '.img/src/**/*.{jpg,jpeg,png,gif}', 
-		dist: './img/dist'
-	}
-};
-
-var config = {
-	autoprefixer: {
-		browsers: ['last 2 versions', '> 5%', 'Firefox ESR']
-	},
-	images: {
-		options: {
-	      optimizationLevel: 3,
-	      progessive: true,
-	      interlaced: true
+	sasslint = require('gulp-sass-lint'),
+	jshint = require('gulp-jshint'),
+	stylish = require('jshint-stylish'),
+	paths = {
+		js: {
+			src: ['./js/src/vendors/*.js', './js/src/components/*.js', './js/src/*.js'],
+			dist: './js/dist',
+			lint: ['./js/src/components/*.js', './js/src/*.js']
+		},
+		sass: {
+			src: './scss/**/*.scss',
+			dist: './css',
+			lint: ['./scss/base/**/*.scss', './scss/global/**/*.scss', './scss/layout/**/*.scss']
+		},
+		img: {
+	        src: './img/src/**/*.{jpg,jpeg,png,gif,svg,PNG,JPG,JPEG,PNG,GIF,SVG}',
+	        dist: './img/'
 	    }
-	}
-}
+	},
+	config = {
+		autoprefixer: {
+			browsers: ['last 2 versions', '> 5%', 'Firefox ESR', 'ie 9']
+		},
+		img: {
+			options: {
+		      optimizationLevel: 3,
+		      progessive: true,
+		      interlaced: true
+		    }
+		}
+	};
 
-gulp.task('sass:dev', function () {
-	return gulp.src(paths.sass.src)
-		.pipe(plumber({
-			handleError: function (err) {
-				console.log(err);
-				this.emit('end');
-			}
-		}))
-		.pipe(sass())
-		.pipe(autoprefixer(config.autoprefixer))
-		.pipe(gulp.dest(paths.sass.dist))
-});
-
-gulp.task('sass:build', function () {
-	return gulp.src(paths.sass.src) 
-		.pipe(sass())
-		.pipe(autoprefixer(config.autoprefixer))
-		.pipe(cleanCSS({debug: true}, function(details) {
-			console.log('Original size of ' + details.name + ': ' + details.stats.originalSize + 'kb');
-			console.log('Minified size of ' + details.name + ': ' + details.stats.minifiedSize + 'kb');
-		}))
-		.pipe(concat('style.min.css'))
-		.pipe(csscomb())
-		.pipe(gulp.dest(paths.sass.dist));
-});
-
-gulp.task('lint:sass', function () {
+gulp.task('sass:lint', function() {
   return gulp.src(paths.sass.lint)
-    .pipe(sassLint({
+    .pipe(sasslint({
     	rules: {
     		'no-warn': 0,
         	'no-ids': 1,
@@ -83,32 +54,76 @@ gulp.task('lint:sass', function () {
         	'no-color-literals': 0
 		},
     }))
-    .pipe(sassLint.format())
-    .pipe(sassLint.failOnError())
+    .pipe(sasslint.format())
+    .pipe(sasslint.failOnError())
 });
 
-gulp.task('scripts:dev', function() {
-	return gulp.src(paths.scripts.src)
-		.pipe(concat('js.min.js'))
-		.pipe(gulp.dest(paths.scripts.dist)) 
+gulp.task('sass:dev', function() {
+	return gulp.src(paths.sass.src)
+		.pipe(plumber({
+			handleError: function (err) {
+				console.log(err);
+				this.emit('end');
+			}
+		}))
+		.pipe(sass())
+		.pipe(concat('style.css'))
+		.pipe(cleanCSS({debug: true}, function(details) {
+			console.log('Original size of ' + details.name + ': ' + details.stats.originalSize + 'kb');
+			console.log('Minified size of ' + details.name + ': ' + details.stats.minifiedSize + 'kb');
+		}))
+		.pipe(gulp.dest(paths.sass.dist));
+		
 });
 
-gulp.task('scripts:build', function() {
-	return gulp.src(paths.scripts.src)
-		.pipe(concat('js.min.js'))
+gulp.task('sass:build', function() {
+	return gulp.src(paths.sass.src)
+		.pipe(plumber({
+			handleError: function (err) {
+				console.log(err);
+				this.emit('end');
+			}
+		}))
+		.pipe(sass())
+		.pipe(autoprefixer(config.autoprefixer))
+		.pipe(csscomb())
+		.pipe(concat('style.min.css'))
+		.pipe(cleanCSS({debug: true}, function(details) {
+			console.log('Original size of ' + details.name + ': ' + details.stats.originalSize + 'kb');
+			console.log('Minified size of ' + details.name + ': ' + details.stats.minifiedSize + 'kb');
+		}))
+		.pipe(gulp.dest(paths.sass.dist));
+		
+});
+
+gulp.task('js:lint', function() {
+	return gulp.src(paths.js.lint)
+		.pipe(jshint())
+		.pipe(jshint.reporter(stylish))
+});
+
+gulp.task('js:dev', function() {
+	return gulp.src(paths.js.src)
+		.pipe(concat('main.js'))
+		.pipe(gulp.dest(paths.js.dist))
+});
+
+gulp.task('js:build', function() {
+	return gulp.src(paths.js.src)
+		.pipe(concat('main.min.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest(paths.scripts.dist))
+		.pipe(gulp.dest(paths.js.dist))
 });
 
-gulp.task('imagemin', function() {
-	return gulp.src(paths.images.src)
-		.pipe(imagemin(config.images))
-		.pipe(gulp.dest(paths.images.dist));
+gulp.task('img:min', function() {
+	return gulp.src(paths.img.src)
+		.pipe(imagemin(config.img))
+		.pipe(gulp.dest(paths.img.dist));
 });
 
 gulp.task('watch', function() {
-	gulp.watch(paths.scripts.src, ['scripts:dev']);
-	gulp.watch(paths.sass.src, ['lint:sass', 'sass:dev']);
+	gulp.watch(paths.js.src, ['js:lint'], ['js:dev']);
+	gulp.watch(paths.sass.src, ['sass:lint', 'sass:dev']);
 });
 
-gulp.task('build', ['sass:build', 'scripts:build', 'imagemin'], function() {});
+gulp.task('build', ['sass:build', 'js:build', 'img:min'], function() {});
