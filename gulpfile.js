@@ -58,7 +58,7 @@ gulp.task('sass:lint', function() {
     .pipe(sasslint.failOnError())
 });
 
-gulp.task('sass:dev', function () {
+gulp.task('sass:dev', function() {
 	return gulp.src(paths.sass.src)
 		.pipe(plumber({
 			handleError: function (err) {
@@ -76,7 +76,7 @@ gulp.task('sass:dev', function () {
 		
 });
 
-gulp.task('sass:build', function () {
+gulp.task('sass:build', function() {
 	return gulp.src(paths.sass.src)
 		.pipe(plumber({
 			handleError: function (err) {
