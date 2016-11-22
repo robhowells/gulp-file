@@ -1,8 +1,17 @@
 {
-	"undef" : true,
+	"undef" : true,			//Require all non-global variables be declared before they are used
+	"unused": true,			//Require all variables to be used
+	"strict": true,			//Require `use strict` pragma in every file
+	"camelcase": true, 		//Identifiers must be in camelCase
+	"eqeqeq": true, 		//Require triple equals (===) for comparison
+	"newcap": true,			//Require capitalization of all constructor functions e.g. new F()
+	"noempty": true,		//Prohibit use of empty blocks
+	"trailing": true,		//Prohibit trailing whitespaces
 	"globals" : {
         "$": false,
         "jQuery": false,
-        "angular": false
+        "angular": false,
+        "window": false,
+        "document": false
     }
 }

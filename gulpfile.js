@@ -67,11 +67,8 @@ gulp.task('sass:dev', function() {
 			}
 		}))
 		.pipe(sass())
+		.pipe(autoprefixer(config.autoprefixer))
 		.pipe(concat('style.css'))
-		.pipe(cleanCSS({debug: true}, function(details) {
-			console.log('Original size of ' + details.name + ': ' + details.stats.originalSize + 'kb');
-			console.log('Minified size of ' + details.name + ': ' + details.stats.minifiedSize + 'kb');
-		}))
 		.pipe(gulp.dest(paths.sass.dist));
 		
 });
@@ -122,7 +119,7 @@ gulp.task('img:min', function() {
 });
 
 gulp.task('watch', function() {
-	gulp.watch(paths.js.src, ['js:lint'], ['js:dev']);
+	gulp.watch(paths.js.src, ['js:lint', 'js:dev']);
 	gulp.watch(paths.sass.src, ['sass:lint', 'sass:dev']);
 });
 
