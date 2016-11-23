@@ -24,6 +24,4 @@
 	    case 6:
 	        day = "Saturday";
 		}
-
-	console.log(day);
 })();
