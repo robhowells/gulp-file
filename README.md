@@ -1,12 +1,27 @@
-#Gulp file
-Example gulp file to automate the following tasks:
+#Gulp file project
+Example gulp project containing the following features
 
-- SASS linting
+##HTML
+- Minification
+
+##Styles
 - SASS compilation
-- CSS autoprefixing
-- CSS formatting 
-- CSS minification
-- JS linting
-- JS concatenation
-- JS minification
-- Image minification
+- Linting
+- Autoprefixing
+- Formatting
+- Minification
+
+##Scripts
+- Linting
+- Concatenation
+- Minification
+
+##Images
+- Compression
+
+##Server
+- Local webserver with LiveReload
+
+##Other features
+- Distinct development and production builds
+- Separation of tasks into multiple files
