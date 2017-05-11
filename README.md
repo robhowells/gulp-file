@@ -1,27 +1,27 @@
-#Gulp file project
+# Gulp file project
 Example gulp project containing the following features
 
-##HTML
+## HTML
 - Minification
 
-##Styles
+## Styles
 - SASS compilation
 - Linting
 - Autoprefixing
 - Formatting
 - Minification
 
-##Scripts
+## Scripts
 - Linting
 - Concatenation
 - Minification
 
-##Images
+## Images
 - Compression
 
-##Server
+## Server
 - Local webserver with LiveReload
 
-##Other features
+## Other features
 - Distinct development and production builds
 - Separation of tasks into multiple files
