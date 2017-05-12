@@ -100,8 +100,9 @@ gulp.task('clean', getTask('clean'));
 * Compiles debug-friendly code into dist directory
 * Initiates server in dist directory
 */
+
 gulp.task('dev', ['server'], function() {
-	config.production = false;
+	config.isProduction = false;
 	gulp.watch(paths.styles.src, ['styles']);
 	gulp.watch(paths.scripts.src, ['scripts']);
 	gulp.watch(paths.images.src, ['images']);
@@ -114,8 +115,9 @@ gulp.task('dev', ['server'], function() {
 * Empties dev directory
 * Compiles production-ready code into dist directory
 */
+
 gulp.task('build', function() {
-	config.production = true;
+	config.isProduction = true;
 	runSequence('clean', 
 		['html', 'styles', 'scripts', 'images']
 	)
