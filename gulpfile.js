@@ -96,6 +96,7 @@ gulp.task('clean', getTask('clean'));
 /**
 * Development mode
 * ----------------
+* Sets production flag to false
 * Watches for file changes in dev directory
 * Compiles debug-friendly code into dist directory
 * Initiates server in dist directory
@@ -112,6 +113,7 @@ gulp.task('dev', ['server'], function() {
 /**
 * Production mode
 * ----------------
+* Sets production flag to true
 * Empties dev directory
 * Compiles production-ready code into dist directory
 */
