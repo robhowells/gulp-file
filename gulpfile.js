@@ -57,9 +57,9 @@ var config = {
 	},
 	images: {
 		options: {
-	      optimizationLevel: 3,
-	      progessive: true,
-	      interlaced: true
+			optimizationLevel: 3,
+			progessive: true,
+			interlaced: true
 	    }
 	},
 	server: {
@@ -82,7 +82,7 @@ function getTask(task) {
 /**
 * Task groups
 * ----------------
-* Run via 'gulp watch' (dev) or 'gulp build' (prod) 
+* Run via 'gulp dev' (development) or 'gulp build' (production) 
 * See /gulp-tasks/ folder for task group contents
 */
 
