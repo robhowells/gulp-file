@@ -1,16 +1,22 @@
-// Packages
+/**
+* Set up & configuration
+* ----------------
+* Gulp packages
+* Top level dev and dist directories
+* Lower level file paths
+* Plugin configurations
+*/
+
 var gulp = require('gulp'),
 	plugins = require('gulp-load-plugins')(),
 	del = require('del'),
 	runSequence = require('run-sequence');
 
-// Top level dev and production directories
 var base = {
 	src: './src/',
 	dist: './dist/'
 };
 
-// Lower level folder paths
 var paths = {
 	html: {
 		src: base.src + '**/*.html',
@@ -30,9 +36,7 @@ var paths = {
 	}
 };
 
-// Configuration for plugins
 var config = {
-	isProduction: plugins.util.env.type === 'production',
 	htmlMin: {
 		collapseWhitespace: true
 	},
@@ -65,34 +69,53 @@ var config = {
 	}
 };
 
-// Helper function to get tasks from /gulp-tasks/ folder
+/**
+* Helper functions
+* ----------------
+* Gets task groups from /gulp-tasks/ folder
+*/
+
 function getTask(task) {
-    return require('./gulp-tasks/' + task)(base, paths, config, gulp, plugins);
+    return require('./gulp-tasks/' + task)(base, paths, config, gulp, plugins, del);
 }
 
-// Core automation tasks
+/**
+* Task groups
+* ----------------
+* Run via 'gulp watch' (dev) or 'gulp build' (prod) 
+* See /gulp-tasks/ folder for task group contents
+*/
+
 gulp.task('html', getTask('html'));
 gulp.task('styles', getTask('styles'));
 gulp.task('scripts', getTask('scripts'));
 gulp.task('images', getTask('images'));
 gulp.task('server', getTask('server'));
+gulp.task('clean', getTask('clean'));
 
-// Initiates a server and watches for file changes
-gulp.task('watch', ['server'], function() {
+/**
+* Development mode
+* ----------------
+* Watches for file changes in dev directory
+* Compiles debug-friendly code into dist directory
+* Initiates server in dist directory
+*/
+gulp.task('dev', ['server'], function() {
+	config.production = false;
 	gulp.watch(paths.styles.src, ['styles']);
 	gulp.watch(paths.scripts.src, ['scripts']);
 	gulp.watch(paths.images.src, ['images']);
 	gulp.watch(paths.html.src, ['html']);
 });
 
-// Empties production directory
-gulp.task('clean', function() {
-    return del.sync(base.dist);
-});
-
-// Builds code into production directory
-// Run 'gulp build --type production' for a production-ready build
+/**
+* Production mode
+* ----------------
+* Empties dev directory
+* Compiles production-ready code into dist directory
+*/
 gulp.task('build', function() {
+	config.production = true;
 	runSequence('clean', 
 		['html', 'styles', 'scripts', 'images']
 	)
