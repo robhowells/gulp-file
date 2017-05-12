@@ -103,10 +103,10 @@ gulp.task('clean', getTask('clean'));
 
 gulp.task('dev', ['server'], function() {
 	config.isProduction = false;
+	gulp.watch(paths.html.src, ['html']);
 	gulp.watch(paths.styles.src, ['styles']);
 	gulp.watch(paths.scripts.src, ['scripts']);
 	gulp.watch(paths.images.src, ['images']);
-	gulp.watch(paths.html.src, ['html']);
 });
 
 /**
