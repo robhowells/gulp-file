@@ -10,11 +10,15 @@
 var gulp = require('gulp'),
 	plugins = require('gulp-load-plugins')(),
 	del = require('del'),
+	browserify = require('browserify'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
 	runSequence = require('run-sequence');
 
 var base = {
 	src: './src/',
-	dist: './dist/'
+	dist: './dist/',
+	temp: '.tmp'
 };
 
 var paths = {
@@ -27,7 +31,7 @@ var paths = {
 		dist: base.dist + 'css/'
 	},
 	scripts: {
-		src: [base.src + 'js/vendors/*.js', base.src + 'js/components/*.js', base.src + 'js/*.js'],
+		src: base.src + 'js/**/*.js',
 		dist: base.dist + 'js/'
 	},
 	images: {
@@ -76,7 +80,7 @@ var config = {
 */
 
 function getTask(task) {
-    return require('./gulp-tasks/' + task)(base, paths, config, gulp, plugins, del);
+    return require('./gulp-tasks/' + task)(base, paths, config, gulp, plugins, del, browserify, source, buffer);
 }
 
 /**
@@ -88,7 +92,9 @@ function getTask(task) {
 
 gulp.task('html', getTask('html'));
 gulp.task('styles', getTask('styles'));
-gulp.task('scripts', getTask('scripts'));
+gulp.task('es6', getTask('es6'));
+gulp.task('bundle', getTask('bundle'));
+gulp.task('scripts', ['es6', 'bundle']);
 gulp.task('images', getTask('images'));
 gulp.task('server', getTask('server'));
 gulp.task('clean', getTask('clean'));
