@@ -23,7 +23,6 @@ module.exports = function (base, paths, config, gulp, plugins, del) {
 		.pipe(plugins.if(!config.isProduction, plugins.sourcemaps.write()))
 		.pipe(plugins.if(config.isProduction, plugins.csscomb()))
 		.pipe(plugins.if(config.isProduction, plugins.cssnano()))
-		.pipe(plugins.newer(paths.styles.dist + 'style.css'))
 		.pipe(plugins.concat('style.css'))
 		.pipe(gulp.dest(paths.styles.dist));
 	};
