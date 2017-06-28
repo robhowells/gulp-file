@@ -1,11 +1,11 @@
 class AnotherModule {
 
-	init (message) {
-		console.log(message);
-	}
+    init (message) {
+        console.log(message);
+    }
 
 }
 
-let anotherModule = new AnotherModule();
+const anotherModule = new AnotherModule();
 
 module.exports = anotherModule;
