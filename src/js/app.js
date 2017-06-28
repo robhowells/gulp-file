@@ -21,4 +21,4 @@ sum2(const1, const2);
 sum3();
 
 // Imported module
-myModule();
+myModule.init(const1);
