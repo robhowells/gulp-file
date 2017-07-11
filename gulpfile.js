@@ -100,6 +100,15 @@ gulp.task('server', getTask('server'));
 gulp.task('clean', getTask('clean'));
 
 /**
+* Init mode
+* ----------------
+* Sets up required directories
+* Compiles any existing code
+*/
+
+gulp.task('init', ['html', 'styles', 'scripts', 'images'], function() {});
+
+/**
 * Development mode
 * ----------------
 * Sets production flag to false
