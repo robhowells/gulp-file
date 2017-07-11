@@ -12,8 +12,9 @@ Example gulp project containing the following features
 - Minification
 
 ## Scripts
+- ES6 transpiling
 - Linting
-- Concatenation
+- Bundling
 - Minification
 
 ## Images
@@ -24,4 +25,4 @@ Example gulp project containing the following features
 
 ## Other features
 - Distinct development and production builds
-- Separation of tasks into multiple files
+- Separation of gulp tasks into multiple files
