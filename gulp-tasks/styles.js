@@ -11,7 +11,7 @@
 * Outputs concatenated style file into dist directory
 */
 
-module.exports = function (base, paths, config, gulp, plugins, del) {
+module.exports = function (base, paths, config, gulp, plugins) {
 	return function () {
 		gulp.src(paths.styles.src)
 		.pipe(plugins.if(!config.isProduction, plugins.sassLint(config.sassLint)))

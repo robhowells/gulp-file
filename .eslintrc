@@ -1,0 +1,26 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "extends": "eslint:all",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "indent": ["error", "tab"],
+    "no-tabs": 0,
+    "quotes": ["error", "double"],
+    "semi": ["error", "always"],
+    "linebreak-style": "off",
+    "strict": [2, "global"],
+    "one-var": ["error", { var: "always", let: "never", const: "never" }],
+    "padded-blocks": ["error", { blocks: "never", classes: "always", switches: "always" }],
+    "newline-before-return": "off",
+    "no-console": ["error", { allow: ["warn", "error"] }]
+  }
+}

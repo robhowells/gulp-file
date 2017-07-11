@@ -1,3 +1,9 @@
+/**
+* Image tasks
+* ----------------
+* 
+*/
+
 module.exports = function (base, paths, config, gulp, plugins) {
 	return function () {
 		gulp.src(paths.images.src)
