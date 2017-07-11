@@ -6,7 +6,7 @@
 * Outputs script files into temp directory
 */
 
-module.exports = function (base, paths, config, gulp, plugins, del) {
+module.exports = function (base, paths, config, gulp, plugins) {
 	return function () {
 		gulp.src(paths.scripts.src)
 		.pipe(plugins.eslint())

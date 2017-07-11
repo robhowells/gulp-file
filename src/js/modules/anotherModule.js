@@ -1,8 +1,9 @@
 class AnotherModule {
 
-    init (message) {
-        console.log(message);
-    }
+	init (message) {
+		this.message = message;
+		console.log(message);
+	}
 
 }
 

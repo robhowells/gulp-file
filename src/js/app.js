@@ -8,9 +8,9 @@ const sum1 = (param1, param2) => param1 + param2;
 
 // Multiple expressions
 const sum2 = (param1, param2) => {
-    const paramSum = param1 + param2;
+	const paramSum = param1 + param2;
 
-    return paramSum * const1;
+	return paramSum * const1;
 };
 
 // No paramters
