@@ -50,9 +50,10 @@ Thumbs.db
 # Ignore bundler config
 /.bundle
 
-# Ignore the build & temp directories
-/dist
+# Ignore the build & temp directory contents
+/dist/*
 .tmp/
+!dist/.gitkeep 
 
 # Ignore Sass' cache
 /.sass-cache
