@@ -52,8 +52,9 @@ Thumbs.db
 
 # Ignore the build & temp directory contents
 /dist/*
-.tmp/
-!dist/.gitkeep 
+!dist/.gitkeep
+/.tmp/*
+!.tmp/.gitkeep
 
 # Ignore Sass' cache
 /.sass-cache

@@ -6,12 +6,14 @@
 * Outputs script files into temp directory
 */
 
-module.exports = function (base, paths, config, gulp, plugins) {
-	return function () {
+const es6 = (base, paths, config, gulp, plugins) => {
+	return () => {
 		gulp.src(paths.scripts.src)
 		.pipe(plugins.eslint())
         .pipe(plugins.eslint.format())
         .pipe(plugins.babel())
-        .pipe(gulp.dest('.tmp'));
-	};
-};
+        .pipe(gulp.dest(`${base.temp}`));
+	}
+}
+
+module.exports = es6;

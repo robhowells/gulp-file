@@ -7,40 +7,42 @@
 * Plugin configurations
 */
 
-var gulp = require('gulp'),
-	plugins = require('gulp-load-plugins')(),
-	del = require('del'),
-	browserify = require('browserify'),
-    source = require('vinyl-source-stream'),
-    buffer = require('vinyl-buffer'),
-	runSequence = require('run-sequence');
+'use strict';
 
-var base = {
-	src: './src/',
-	dist: './dist/',
-	temp: '.tmp'
+const gulp = require('gulp');
+const plugins = require('gulp-load-plugins')();
+const del = require('del');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const runSequence = require('run-sequence');
+
+const base = {
+	src: './src',
+	dist: './dist',
+	temp: './.tmp'
 };
 
-var paths = {
+const paths = {
 	html: {
-		src: base.src + '**/*.html',
-		dist: base.dist
+		src: `${base.src}/**/*.html`,
+		dist: `${base.dist}/`
 	},
 	styles: {
-		src: base.src + 'scss/**/*.scss',
-		dist: base.dist + 'css/'
+		src: `${base.src}/scss/**/*.scss`,
+		dist: `${base.dist}/css/`
 	},
 	scripts: {
-		src: base.src + 'js/**/*.js',
-		dist: base.dist + 'js/'
+		src: `${base.src}/js/**/*.js`,
+		dist: `${base.dist}/js/`
 	},
 	images: {
-		src: base.src + 'img/**/*.{jpg,jpeg,png,gif}',
-		dist: base.dist + 'img/'
+		src: `${base.src}/img/**/*.{jpg,jpeg,png,gif}`,
+		dist: `${base.dist}/img/`
 	}
 };
 
-var config = {
+const config = {
 	htmlMin: {
 		collapseWhitespace: true
 	},
@@ -79,9 +81,7 @@ var config = {
 * Gets task groups from /gulp-tasks/ folder
 */
 
-function getTask(task) {
-    return require('./gulp-tasks/' + task)(base, paths, config, gulp, plugins, del, browserify, source, buffer);
-}
+const getTask = (task) => require('./gulp-tasks/' + task)(base, paths, config, gulp, plugins, del, browserify, source, buffer);
 
 /**
 * Task groups
@@ -108,7 +108,7 @@ gulp.task('clean', getTask('clean'));
 * Initiates server in dist directory
 */
 
-gulp.task('dev', ['server'], function() {
+gulp.task('dev', ['server'], () => {
 	config.isProduction = false;
 	gulp.watch(paths.html.src, ['html']);
 	gulp.watch(paths.styles.src, ['styles']);
@@ -124,9 +124,9 @@ gulp.task('dev', ['server'], function() {
 * Compiles production-ready code into dist directory
 */
 
-gulp.task('build', function() {
+gulp.task('build', () => {
 	config.isProduction = true;
-	runSequence('clean', 
+	runSequence('clean',
 		['html', 'styles', 'scripts', 'images']
 	)
 });
